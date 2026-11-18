@@ -1,17 +1,43 @@
-# battery_alert
+# Battery Alert
 
-A new Flutter project.
+Приложение для отслеживания уровня заряда устройства и уведомлений при низком заряде.
 
-## Getting Started
+## Состав проекта
 
-This project is a starting point for a Flutter application.
+- **Клиент (Flutter)** — интерфейс, отображение текущего процента заряда и уведомлений.
+- **Сервер (Python)** — приём данных от клиента, проверка порога (ниже 35%), отправка уведомлений на компьютер.
 
-A few resources to get you started if this is your first Flutter project:
+## Как запустить
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+1. Установить зависимости Flutter:
+   flutter pub get
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. Указать IP-адрес компьютера с сервером в коде приложения (в lib/main.dart).
+
+3. Запустить сервер:
+   python server/battery_server.py
+
+4. Запустить Flutter-приложение на устройстве или эмуляторе.
+
+5. Убедиться, что приложение и сервер находятся в одной локальной сети.
+
+## Настройка IP-адреса
+Приложение должно знать адрес компьютера, на котором запущен сервер. По умолчанию в коде указан локальный адрес для эмулятора. Если запускаете на реальном телефоне:
+
+1. Узнайте IP-адрес компьютера в локальной сети (Windows: ipconfig в терминале, адрес вида 192.168.x.x).
+
+2. Пропишите его в lib/main.dart вместо текущего адреса сервера.
+
+3. Перезапустите приложение.
+
+При каждом изменении IP (например, сменилась Wi-Fi-сеть) адрес нужно обновить.
+
+## Особенности логики
+- Сервер отслеживает уровень заряда, поступающий от клиента.
+- При падении заряда ниже 35% сервер отправляет уведомление на компьютер.
+- Данные передаются по сети в реальном времени.
+
+## Структура
+lib/ — код Flutter-приложения.
+server/ — Python-сервер.
+android/ — нативные настройки для Android.
